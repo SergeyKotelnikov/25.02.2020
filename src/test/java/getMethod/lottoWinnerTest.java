@@ -10,10 +10,20 @@ import org.junit.Assert;
 import org.junit.Test;
 
 public class lottoWinnerTest {
-    String recordId = "2";
 
     @Test
     public void testGetWinners1() {
+        given()
+                .baseUri("http://localhost:3000/posts")
+                .when()
+                .get("/2")
+                .then()
+                .body("lotto.lottoId", equalTo(5))
+                .body("lotto.winners.winnerId", hasItems(23, 54));
+    }
+
+    @Test
+    public void testGetWinners2() {
         baseURI = "http://localhost:3000/posts";
 
         get("/2").then().body("lotto.lottoId", equalTo(5));
@@ -21,7 +31,7 @@ public class lottoWinnerTest {
     }
 
     @Test
-    public void testGetWinners2() {
+    public void testGetWinners3() {
         baseURI = "http://localhost:3000/posts";
         RequestSpecification httpRequest = given();
         Response response = httpRequest.get("/2");
